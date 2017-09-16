@@ -2,7 +2,7 @@
 
 1. [Installation](#installation)
 2. [Proof of Concepts](#proof-of-concepts)
-3. [References](#references)
+3. [Resources](#resources)
 
 ## Installation
 
@@ -177,7 +177,7 @@ run
 %
 ```
 
-## References
+## Resources
 
 1. My original [PharoGs experiments][3].
 2. James Foster's ESUG 2017 presentation [Running Pharo on the GemStone VM][2] and companion [PharoGs scripts and file ins][1].
