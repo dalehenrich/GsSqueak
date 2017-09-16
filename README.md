@@ -44,7 +44,8 @@ createStone -g -s $GS_HOME/shared/downloads/products/GemStone64Bit3.4.0-x86_64.L
 
 ### Proof of Concept 1
 
-The goal of the initial proof of concept is to provide an introduction to GemStone method environments. 
+The goal of the initial proof of concept is to provide an introduction to GemStone method environments.
+The topaz script for this proof of concept can be found at `$GS_HOME/shared/repos/GsSqueak/scripts/pos_1.tpz`.
 
 For GsSqueak, we will be using method environment 7.
 
@@ -137,16 +138,43 @@ System commit.
      %
 ```
 
-Start a topaz session:
+#### Proof of Concept 1 Excercise
 
+1. Start a topaz session:
 ```
-startTopaz gsSqueak_340 -l
+   startTopaz gsSqueak_340 -l
 ```
+2. login in as GsSqueak and set `compile_env` for topaz to 0:
+```
+set u GsSqueak password swordfish
+login
+set compile_env: 0
+```
+3. In method environment 0, the standard GemStone **SmallInteger** methods are available:
+```
+run
+3 / 4
+%
+```
+4. In method environment 0, the method that was added for method environment 7 is not available:
+```
+expecterror GemStoneError 2010
+run
+3 foo: 4
+%
+```
+5. Switch to environment 7 in topaz and run the same set of doits:
+```
+set compile_env: 7
 
-at the `topaz>` prompt enter the following:
+expecterror GemStoneError 2010
+run
+3 / 4
+%
 
-```
-input $GS_HOME/shared/repos/GsSqueak/scripts/proofOfConcept_1.gs
+run
+3 foo: 4
+%
 ```
 
 ## References
