@@ -31,7 +31,7 @@ git clone https://github.com/dalehenrich/GsSqueak.git
 ## Create a GsSqueak stone
 
 ```
-createStone -g -s $GE_HOME/shared/downloads/products/GemStone64Bit3.4.0-x86_64.Linux/bin/extent0.dbf gsSqueak_340 3.4.0
+createStone -g -s $GS_HOME/shared/downloads/products/GemStone64Bit3.4.0-x86_64.Linux/bin/extent0.dbf gsSqueak_340 3.4.0
 ```
 
 ## run Proof of Concept
