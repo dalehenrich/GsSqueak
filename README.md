@@ -49,8 +49,7 @@ The goal of the initial proof of concept is to provide an introduction to GemSto
 For GsSqueak, we will be using method environment 7.
 
 1. Create a GsSqueak GemStone user whose [symbol list][6] contains a single *SymbolDictionary* named **Smalltalk**.
-
-   ```Smalltalk
+```Smalltalk
 | gsSqueak |
 gsSqueak := AllUsers userWithId: 'GsSqueak' ifAbsent: [ nil ].
 gsSqueak ~~ nil
@@ -66,7 +65,7 @@ gsSqueak ~~ nil
     addPrivilege: #'OtherPassword';
     yourself.
 System commitTransaction.
-   ```
+```
 2. Populate **Smalltalk** with a minimal class hierarchy consisting of *ProtoObject*, *Object*, and *SmallInteger*. *ProtoObject* and *Object* will be new classes that are created in the **Smalltalk** symbol dictionary. *SmallInteger* will be the standard GemStone class, but it's method environment 7 superclass method look up chain will be routed through *Object*.
 3. Implement *ProtoObject>>doesNotUnderstand:* in method enviroment 7 so that messages not understood in method environment 7 will be forwarded to method environment 0. 
 4. Implement *SmallInteger>>foo:* in method environment 7 to forward to *SmallInteger>>+* in method environment 0.
