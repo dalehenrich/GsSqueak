@@ -1,7 +1,7 @@
-#ifErr 1 stk
-#ifErr 2 stack
-#ifErr 3 abort
-#ifErr 4 exit
+ifErr 1 stk
+ifErr 2 stack
+ifErr 3 abort
+ifErr 4 exit
 
 set user SystemUser p swordfish
 login
@@ -33,27 +33,7 @@ foo: arg
   ^ self @env0: + arg
 %
 
-category: 'env 7 experiment'
-method: SmallInteger
-foo: arg
-
-  ^ self @env0: + arg
-%
-
 set compile_env: 0
-
-classmethod: System
-superclassFor: aClass env: env put: anObject
-
-<primitive: 2001> "enter protected mode"
-| prot |
-prot := System _protectedMode .
-[
- ^aClass superclassForEnv: env put: anObject.
-] ensure:[
-  prot _leaveProtectedMode
-]
-%
 
 commit
 
@@ -105,20 +85,6 @@ run
 	) category: 'GemStone'.
 %
 
-category: 'gemstone prim env 0'
-method: Object
-doesNotUnderstand: aMessageDescriptor
-
-"The method is for compatiblity with Gs64 v2.x, and assumes you are using 
-   only method environment 0  for all of your Smalltalk code."
-
-| ex sel args |
-(ex := MessageNotUnderstood _basicNew)
-  receiver: self selector: (sel := aMessageDescriptor at: 1) 
-		args: (args := aMessageDescriptor at: 2) envId: 0 .
-^ex signal .
-%
-
 set compile_env: 7
 
 category: 'gemstone prim env 7'
@@ -141,7 +107,7 @@ run
 | gsSqueak gsSqueakObjectClass|
 gsSqueak := AllUsers userWithId: 'GsSqueak'.
 gsSqueakObjectClass := gsSqueak symbolList objectNamed: #Object.
-System superclassFor: SmallInteger env: 7 put: gsSqueakObjectClass.
+SmallInteger superclassForEnv: 7 put: gsSqueakObjectClass.
 %
 
 commit
