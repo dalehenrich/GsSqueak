@@ -70,7 +70,7 @@ input $GS_HOME/shared/repos/GsSqueak/scripts/proofOfConcept_1.gs
 1. My original [PharoGs experiments][3].
 2. James Foster's ESUG 2017 presentation [Running Pharo on the GemStone VM][2] and companion [PharoGs scripts and file ins][1].
 3. GemStone/S 64 Programming Guide ([pdf][4]/[html][5]).
-4. GemStone/S 64 Topaz User's Guide ([pdf][8]/html][7]).
+4. GemStone/S 64 Topaz User's Guide ([pdf][8]/[html][7]).
 
 [1]: https://github.com/jgfoster/PharoGs/tree/james
 [2]: https://www.slideshare.net/esug/running-pharo-on-the-gemstone-vm
