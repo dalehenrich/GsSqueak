@@ -35,9 +35,19 @@ git clone https://github.com/dalehenrich/GsSqueak.git
 ```
 
 ### Create a GsSqueak stone
+This stone is a standard GemStone repository without tODE installed. This stone should be used for the GsSqueak experiments.
+
 
 ```
 createStone -g -s $GS_HOME/shared/downloads/products/GemStone64Bit3.4.0-x86_64.Linux/bin/extent0.dbf gsSqueak_340 3.4.0
+```
+
+### Create a tODE stone and tODE client
+Create a tODE stone and client, so that you can easily browse the GemStone class library. Note that methods in categories beginning with a `*` are extension methods for the tODE environment and are not present in the `gsSqueak_340` stone.
+
+```
+createStone tode_340 3.4.0
+createClient tode
 ```
 
 ## Proof of Concepts
