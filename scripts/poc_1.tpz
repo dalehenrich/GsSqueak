@@ -43,15 +43,17 @@ set u GsSqueak password swordfish
 login
 
 run
-| symbolList userProfile sys |
-sys := Globals at: #System.
-userProfile := sys myUserProfile.
+| symbolList userProfile |
+userProfile := System myUserProfile.
 symbolList := SymbolList new.
 symbolList 
 	createDictionaryNamed: #'GemStone' at: 0;
 	createDictionaryNamed: #'Smalltalk' at: 0;
 	yourself.
-(symbolList objectNamed: #GemStone) at: #System put: sys.
+(symbolList objectNamed: #GemStone) 
+  at: #System put: (Globals at: #System);
+  at: #GemStoneError put: (Globals at: #GemStoneError);
+  yourself.
 userProfile symbolList: symbolList.
 %
 
