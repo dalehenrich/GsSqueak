@@ -64,7 +64,7 @@ gsSqueak ~~ nil
     addPrivilege: #'UserPassword';
     addPrivilege: #'OtherPassword';
     yourself.
-System commitTransaction.
+System commit.
 ```
 2. Adjust the [symbol list][6] for GsSqueak to contain a *SymbolDictionary* named **Smalltalk** and a  *SymbolDictionary* named **GemStone**. **GemStone** contains a few classes from the standard GemStone class hierarchy to enable debugging of the environment (**System**) and execution control for the topaz scripts (**GemStoneError**).
 ```Smalltalk
@@ -115,26 +115,26 @@ System commit.
 ```
 3. Implement *ProtoObject>>doesNotUnderstand:* in method enviroment 7 so that messages not understood in method environment 7 will be forwarded to method environment 0. 
 ```
-set compile_env: 7
+     set compile_env: 7
 
-category: 'gemstone prim env 7'
-method: Object
-doesNotUnderstand: aMessageDescriptor
-  "invoke MessageNotUnderstood indirectly in env 0"
+     category: 'gemstone prim env 7'
+     method: Object
+     doesNotUnderstand: aMessageDescriptor
+       "invoke MessageNotUnderstood indirectly in env 0"
 
-^ self @env0: doesNotUnderstand: aMessageDescriptor
-%
+     ^ self @env0: doesNotUnderstand: aMessageDescriptor
+     %
 ```
 4. Implement *SmallInteger>>foo:* in method environment 7 to forward to *SmallInteger>>+* in method environment 0.
 ```
-set compile_env: 7
+     set compile_env: 7
 
-category: 'env 7 experiment'
-method: SmallInteger
-foo: arg
+     category: 'env 7 experiment'
+     method: SmallInteger
+     foo: arg
 
-  ^ self @env0: + arg
-%
+       ^ self @env0: + arg
+     %
 ```
 
 Start a topaz session:

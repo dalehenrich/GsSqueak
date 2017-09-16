@@ -21,7 +21,7 @@ gsSqueak ~~ nil
     addPrivilege: #'UserPassword';
     addPrivilege: #'OtherPassword';
     yourself.
-System commitTransaction.
+System commit.
 %
 
 set compile_env: 7
@@ -111,9 +111,9 @@ run
 gsSqueak := AllUsers userWithId: 'GsSqueak'.
 gsSqueakObjectClass := gsSqueak symbolList objectNamed: #Object.
 SmallInteger superclassForEnv: 7 put: gsSqueakObjectClass.
+System commit.
 %
 
-commit
 logout
 
 
