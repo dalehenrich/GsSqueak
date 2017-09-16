@@ -1,4 +1,4 @@
-# GsPharo Proof of Concept
+# GsSqueak Proof of Concept
 
 ## Install GsDevKit_home
 
