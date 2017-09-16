@@ -48,7 +48,7 @@ The goal of the initial proof of concept is to provide an introduction to GemSto
 
 For GsSqueak, we will be using method environment 7.
 
-1. Create a GsSqueak GemStone user whose [symbol list][6] contains a single *SymbolDictionary* named **Smalltalk**.
+1. Create a GsSqueak GemStone user: 
 ```Smalltalk
 | gsSqueak |
 gsSqueak := AllUsers userWithId: 'GsSqueak' ifAbsent: [ nil ].
@@ -66,9 +66,76 @@ gsSqueak ~~ nil
     yourself.
 System commitTransaction.
 ```
-2. Populate **Smalltalk** with a minimal class hierarchy consisting of *ProtoObject*, *Object*, and *SmallInteger*. *ProtoObject* and *Object* will be new classes that are created in the **Smalltalk** symbol dictionary. *SmallInteger* will be the standard GemStone class, but it's method environment 7 superclass method look up chain will be routed through *Object*.
+2. Adjust the [symbol list][6] for GsSqueak to contain a *SymbolDictionary* named **Smalltalk** and a  *SymbolDictionary* named **GemStone**. **GemStone** contains a few classes from the standard GemStone class hierarchy to enable debugging of the environment (**System**) and execution control for the topaz scripts (**GemStoneError**).
+```Smalltalk
+| symbolList userProfile |
+userProfile := System myUserProfile.
+symbolList := SymbolList new.
+symbolList 
+	createDictionaryNamed: #'GemStone' at: 0;
+	createDictionaryNamed: #'Smalltalk' at: 0;
+	yourself.
+(symbolList objectNamed: #GemStone) 
+  at: #System put: (Globals at: #System);
+  at: #GemStoneError put: (Globals at: #GemStoneError);
+  yourself.
+userProfile symbolList: symbolList.
+System commit.
+```
+2. Populate **Smalltalk** with a minimal class hierarchy consisting of *ProtoObject*, *Object*, and *SmallInteger*. *ProtoObject* and *Object* will be new classes that are created in the **Smalltalk** symbol dictionary.
+```Smalltalk
+(nil subclass: 'ProtoObject'
+	instVarNames: #()
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: {}
+	inDictionary: Smalltalk
+	newVersionOf: (Smalltalk at: #ProtoObject ifAbsent: [nil])
+	description: '0'
+	options: #()
+	) category: 'GemStone'.
+(ProtoObject subclass: 'Object'
+	instVarNames: #()
+	classVars: #()
+	classInstVars: #()
+	poolDictionaries: {}
+	inDictionary: Smalltalk
+	newVersionOf: (Smalltalk at: #Object ifAbsent: [nil])
+	description: '0'
+	options: #()
+	) category: 'GemStone'.
+```
+   *SmallInteger* will be the standard GemStone class, but it's method environment 7 superclass method look up chain will be routed through *Object*.
+```Smalltalk
+| gsSqueak gsSqueakObjectClass|
+gsSqueak := AllUsers userWithId: 'GsSqueak'.
+gsSqueakObjectClass := gsSqueak symbolList objectNamed: #Object.
+SmallInteger superclassForEnv: 7 put: gsSqueakObjectClass.
+System commit.
+```
 3. Implement *ProtoObject>>doesNotUnderstand:* in method enviroment 7 so that messages not understood in method environment 7 will be forwarded to method environment 0. 
+```
+set compile_env: 7
+
+category: 'gemstone prim env 7'
+method: Object
+doesNotUnderstand: aMessageDescriptor
+  "invoke MessageNotUnderstood indirectly in env 0"
+
+^ self @env0: doesNotUnderstand: aMessageDescriptor
+%
+```
 4. Implement *SmallInteger>>foo:* in method environment 7 to forward to *SmallInteger>>+* in method environment 0.
+```
+set compile_env: 7
+
+category: 'env 7 experiment'
+method: SmallInteger
+foo: arg
+
+  ^ self @env0: + arg
+%
+```
 
 Start a topaz session:
 
