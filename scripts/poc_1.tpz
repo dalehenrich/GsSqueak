@@ -46,15 +46,16 @@ run
 | symbolList userProfile sys |
 sys := Globals at: #System.
 userProfile := sys myUserProfile.
-symbolList := userProfile symbolList.
-(symbolList objectNamed: #'Smalltalk') ifNil: [
-	symbolList 
-		createDictionaryNamed: #'Smalltalk' at: 0;
-		yourself.
-].
+symbolList := SymbolList new.
+symbolList 
+	createDictionaryNamed: #'GemStone' at: 0;
+	createDictionaryNamed: #'Smalltalk' at: 0;
+	yourself.
+(symbolList objectNamed: #GemStone) at: #System put: sys.
+userProfile symbolList: symbolList.
 %
 
-# commit and logout/login to synch the transient and persisten symbol lists
+# commit and logout/login to synch the transient and persistent symbol lists
 commit 
 logout
 login
@@ -116,8 +117,6 @@ logout
 
 set u GsSqueak password swordfish
 login
-
-break method Integer + 
 
 set compile_env: 0
 
