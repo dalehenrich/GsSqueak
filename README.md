@@ -55,7 +55,7 @@ createClient tode
 ### Proof of Concept 1
 
 The goal of the initial proof of concept is to provide an introduction to GemStone method environments.
-The topaz script for this proof of concept can be found at `$GS_HOME/shared/repos/GsSqueak/scripts/pos_1.tpz`.
+The topaz script for this proof of concept can be found at `$GS_HOME/shared/repos/GsSqueak/scripts/poc_1.tpz`.
 
 For GsSqueak, we will be using method environment 7.
 
